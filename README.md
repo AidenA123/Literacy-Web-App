@@ -1,6 +1,6 @@
 # Literacy App - Quick Reference Guide
 
-A literacy support web app with login/register, a lesson dashboard, five interactive phonics/reading lessons, and accessibility features (dark mode, high contrast, text-to-speech, adjustable font size)
+A literacy support web app with login/register, a lesson dashboard, five interactive phonics/reading lessons, and accessibility features (dark mode, high contrast, text-to-speech, adjustable font size).
 
 ---
 
