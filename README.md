@@ -1,329 +1,197 @@
 # Literacy App - Quick Reference Guide
 
+A literacy support web app with login/register, a lesson dashboard, five interactive phonics/reading lessons, and accessibility features (dark mode, high contrast, text-to-speech, adjustable font size).
+
 ---
 
 # Files
 
-| File             | Purpose                                  |
-| ---------------- | ---------------------------------------- |
-| `Index.html`     | Page content and layout                  |
-| `CSS/Styles.css` | Colours, sizing, spacing, and appearance |
-| `JS/Script.js`   | Interactive features and functionality   |
+| File                | Purpose                                                        |
+| ------------------- | --------------------------------------------------------------- |
+| `index.html`        | Login / Register page                                          |
+| `Dashboard.html`    | Main hub — app info, lesson map, statistics, settings           |
+| `Lesson1.html`      | Lesson 1 — Basic Vowels                                         |
+| `Lesson2.html`      | Lesson 2 — Consonants                                           |
+| `Lesson3.html`      | Lesson 3 — Short Sentences                                      |
+| `Lesson4.html`      | Lesson 4 — Phonics                                              |
+| `Lesson5.html`      | Lesson 5 — Type What You See                                    |
+| `CSS/Styles.css`    | Colours, sizing, spacing, and appearance                        |
+| `JS/Account.js`     | Login / Register form logic                                     |
+| `JS/Script.js`      | Lesson data, lock/unlock logic, dashboard stats sync             |
+| `JS/Lessons.js`     | Stage system, scoring, hints, timers, lesson completion          |
+| `JS/Accessibility.js` | Theme, high contrast, text-to-speech, font size controls       |
+| `Assets/Images/book.ico` | Favicon                                                    |
 
 ---
 
 # App Sections
 
-## 1. App Information Card
+## 1. Login / Register (`index.html`)
+
+Two tabs — Login and Register — toggled via `showLogin()` / `showRegister()` in `JS/Account.js`.
+
+* Registered accounts are stored in `localStorage` under `users`
+* On successful login, the current user is stored under `currentUser` and the app redirects to `Dashboard.html`
+
+---
+
+## 2. App Info Card (`Dashboard.html`)
 
 Shows:
 
 * App Name
-* User Level
-* User XP
-* Daily Goal Progress
+* User Level (`#level-text`)
+* User XP (`#xp-text`)
+* Daily Goal Progress (`#goal-fill`, `#goal-percentage`)
 
 ### Change App Name
 
-Search for (Index.html):
-
-```html
-<h2 class="app-name">
-```
-
-Example:
+Search for (Dashboard.html):
 
 ```html
 <h2 class="app-name">Literacy App</h2>
 ```
 
----
+### Level, XP, and Goal text
 
-### Change Level
-
-Search for (Index.html):
-
-```html
-<p class="app-details">Level 1</p>
-```
+These are **not hardcoded** — they're calculated and written in automatically by `syncDashboardStats()` in `JS/Script.js`, based on values stored in `localStorage` (`xp`, `wordsLearned`, lesson completion, etc.). To change starting values, edit the defaults in `Script.js` or clear progress via **Reset Progress** in Settings.
 
 ---
 
-### Change XP
+## 3. Selected Lesson Card (`Dashboard.html`)
 
-Search for (Index.html):
+Shows details for whichever lesson node was last clicked.
 
-```html
-<p class="app-details">XP: 100</p>
-```
+* `#sel-title` — lesson title
+* `#sel-desc` — lesson description
+* `#sel-xp` — XP reward, locked/completed state
 
----
+Populated by `selectLesson(id)` in `JS/Script.js`. To edit lesson titles, descriptions, or XP rewards, edit the `lessons` array at the top of `Script.js`:
 
-### Change Daily Goal %
-
-Search for (Index.html):
-
-```html
-<div class="goal-fill" style="width: 0%;"></div>
-```
-
-and
-
-```html
-<p class="goal-percentage">0%</p>
-```
-
-Example:
-
-```html
-<div class="goal-fill" style="width: 50%;"></div>
-<p class="goal-percentage">50%</p>
+```javascript
+const lessons = [
+  { id: 1, title: "Basic Vowels", desc: "...", xp: 100 },
+  ...
+];
 ```
 
 ---
 
-# 2. Selected Lesson Card
+## 4. Learning Card (`Dashboard.html`)
 
-Shows information about the currently selected lesson.
+Shows the five lesson nodes in sequence, connected by arrows.
 
-### Change Lesson Title
+* `.node-unlocked` — available lesson
+* `.node-locked` — locked lesson (shows 🔒)
+* `.node-completed` — finished lesson (shows ✓)
 
-Search for (Index.html):
-
-```html
-<h3 class="selected-lesson-title">
-```
-
----
-
-### Change Lesson Description
-
-Search for (Index.html):
-
-```html
-<p class="selected-lesson-desc">
-```
-
----
-
-### Change XP Reward
-
-Search for (Index.html):
-
-```html
-<p class="selected-lesson-xp">
-```
-
-Example:
-
-```html
-⭐ Reward: 250 XP
-```
-
----
-
-# 3. Learning Card
-
-Shows lesson progression.
-
-### Unlocked Lesson
-
-Search for (Index.html):
-
-```html
-<div class="node node-unlocked">
-```
-
----
-
-### Locked Lesson
-
-Search for (Index.html):
-
-```html
-<div class="node node-locked">
-```
-
----
+These classes are applied automatically by `renderLessonNodes()` in `Script.js` — don't set them manually in the HTML, as they'll be overwritten on page load.
 
 ### Change Lesson Names
 
-Search for (Index.html):
+Search for (Dashboard.html):
 
 ```html
-<span>Lesson Title</span>
-```
-
-Example:
-
-```html
-<span>Reading Basics</span>
+<div class="node" data-id="1" onclick="selectLesson(1)">
+    <span>Basic Vowels</span>
+</div>
 ```
 
 ---
 
-### Lock Icon
+## 5. Statistics Card (`Dashboard.html`)
 
-Search for (Index.html):
+Shows learner progress, all auto-populated from `localStorage`:
 
-```html
-<span class="lock-icon">🔒</span>
-```
-
-Remove it if the lesson should be unlocked.
-
----
-
-# 4. Statistics Card
-
-Shows learner progress.
-
-### Words Learned
-
-Search for (Index.html):
-
-```html
-<p class="stat-value">0</p>
-```
-
-under:
-
-```html
-Words Learned
-```
+| Stat                  | Element ID          | Set by                        |
+| ---------------------- | ------------------- | ------------------------------ |
+| Words Learnt           | `#stat-words`       | `Script.js`                    |
+| Lessons Completed      | `#stat-lessons`     | `Script.js` (out of 5, not 4)  |
+| Current Streak         | `#stat-streak`      | `Script.js` / `updateStreak()` in `Lessons.js` |
+| Stars Earned           | `#stat-stars`       | `Script.js` (`getTotalStars()`)|
+| Avg Completion Time    | `#stat-avg-time`    | Inline script in `Dashboard.html` |
 
 ---
 
-### Lessons Completed
-
-Search for (Index.html):
-
-```html
-<p class="stat-value">0 / 4</p>
-```
-
----
-
-### Current Streak
-
-Search for (Index.html):
-
-```html
-<p class="stat-value">0 Days</p>
-```
-
----
-
-# 5. Settings Card
+## 6. Settings Card (`Dashboard.html`)
 
 Contains:
 
-* Theme Controls
-* Font Size Controls
+* **Theme** — Light / Dark (`setTheme()` in `Accessibility.js`)
+* **Font Size** — A− / A / A+ (`decreaseFont()`, `defaultFont()`, `increaseFont()` in `Accessibility.js`)
+* **Accessibility** — High Contrast toggle, Text to Speech toggle (`toggleContrast()`, `toggleTTS()` in `Accessibility.js`)
+* **Account** — Log Out (`logout()` in `Script.js`), Reset Progress (`resetAllProgress()` in `Script.js`)
+
+---
+
+## 7. Lesson Pages (`Lesson1.html` – `Lesson5.html`)
+
+Each lesson page has 5 stages, driven by a `stages` object defined inline in that file:
+
+```javascript
+const stages = {
+  1: {
+    title: "Stage 1 - ...",
+    question: "...",
+    hints: ["...", "..."],
+    explanation: "...",
+    options: [
+      { text: "...", correct: true },
+      ...
+    ]
+  },
+  ...
+};
+```
+
+To change a lesson's questions, hints, or answers, edit the `stages` object in that specific `LessonN.html` file — the logic that drives it (`initLesson()`, `handleCheckAnswer()`, `showHintModal()`, `nextStage()`) lives in `JS/Lessons.js` and is shared across all five lessons.
+
+Scoring per stage is based on attempts and hints used (`getStagePoints()` in `Lessons.js`) — first-try correct answers score highest.
 
 ---
 
 # JavaScript Functions
 
-Located in:
+## Located in `JS/Accessibility.js`
 
-```text
-JS/Script.js
-```
+| Function            | Purpose                          |
+| -------------------- | --------------------------------- |
+| `setTheme('light')`  | Switches to Light Mode            |
+| `setTheme('dark')`   | Switches to Dark Mode             |
+| `toggleContrast()`   | Toggles high-contrast mode        |
+| `toggleTTS()`        | Toggles text-to-speech on/off     |
+| `increaseFont()`     | Increases font size (max 20px)    |
+| `decreaseFont()`     | Decreases font size (min 10px)    |
+| `defaultFont()`      | Resets font size to default (16px)|
 
----
+## Located in `JS/Script.js`
 
-## setTheme('light')
+| Function                | Purpose                                       |
+| ------------------------ | ---------------------------------------------- |
+| `selectLesson(id)`       | Loads a lesson's details into the selected-lesson card |
+| `startLesson()`          | Navigates to the currently selected lesson    |
+| `renderLessonNodes()`    | Applies locked/unlocked/completed styling to nodes |
+| `syncDashboardStats()`   | Updates XP, level, goal bar, and stat cards   |
+| `logout()`               | Clears the current user and returns to login  |
+| `resetAllProgress()`     | Wipes all lesson progress after confirmation  |
 
-Changes the app to Light Mode.
+## Located in `JS/Lessons.js`
 
-Example:
-
-```javascript
-setTheme('light');
-```
-
----
-
-## setTheme('dark')
-
-Changes the app to Dark Mode.
-
-Example:
-
-```javascript
-setTheme('dark');
-```
-
----
-
-## increaseFont()
-
-Makes text larger.
-
-Example:
-
-```javascript
-increaseFont();
-```
-
-Current limit:
-
-```text
-20px
-```
-
----
-
-## decreaseFont()
-
-Makes text smaller.
-
-Example:
-
-```javascript
-decreaseFont();
-```
-
-Current limit:
-
-```text
-10px
-```
-
----
-
-## defaultFont()
-
-Returns text size to normal.
-
-Example:
-
-```javascript
-defaultFont();
-```
-
-Default size:
-
-```text
-14px
-```
+| Function                | Purpose                                       |
+| ------------------------ | ---------------------------------------------- |
+| `initLesson(n)`          | Loads the current stage for lesson `n`        |
+| `handleCheckAnswer(i)`   | Checks the selected answer                    |
+| `showHintModal()`        | Reveals the next hint (costs points)          |
+| `nextStage(n)`           | Advances to the next stage or shows summary   |
+| `completeLessonFinal(n)` | Finalises and saves lesson completion         |
 
 ---
 
 # Common CSS Changes
 
-Located in:
-
-```text
-CSS/Styles.css
-```
-
----
+Located in `CSS/Styles.css`.
 
 ## Change Background Colour
-
-Search for (Styles.css):
 
 ```css
 body {
@@ -331,11 +199,7 @@ body {
 }
 ```
 
----
-
 ## Change Dark Theme Colour
-
-Search for (Styles.css):
 
 ```css
 body.dark {
@@ -343,112 +207,51 @@ body.dark {
 }
 ```
 
----
-
 ## Change Button Colours
-
-Search for (Styles.css):
 
 ```css
 .settings-btn
-```
-
-and
-
-```css
 .settings-btn--active
 ```
 
----
-
 ## Change Card Appearance
-
-Search for (Styles.css):
 
 ```css
 .card
 ```
 
-This controls:
-
-* Card colour
-* Card border
-* Card spacing
-* Card corners
+Controls card colour, border, spacing, and corner radius.
 
 ---
 
 # Quick Search Guide
 
-| Want to Change     | Search For                      |
-| ------------------ | ------------------------------- |
-| App Name           | `app-name`                      |
-| Level              | `Level 1`                       |
-| XP                 | `XP:`                           |
-| Daily Goal         | `goal-fill`                     |
-| Lesson Title       | `selected-lesson-title`         |
-| Lesson Description | `selected-lesson-desc`          |
-| Lesson Reward      | `selected-lesson-xp`            |
-| Learning Path      | `node-unlocked` / `node-locked` |
-| Statistics         | `stat-value`                    |
-| Theme Buttons      | `setTheme()`                    |
-| Font Controls      | `increaseFont()`                |
-| Background Colour  | `body {`                        |
-| Dark Theme         | `body.dark`                     |
-| Cards              | `.card`                         |
-| Buttons            | `.settings-btn`                 |
+| Want to Change      | Search For                       | File               |
+| --------------------- | --------------------------------- | ------------------- |
+| App Name             | `app-name`                        | Dashboard.html      |
+| Lesson Data / XP     | `const lessons`                   | Script.js           |
+| Lesson Questions     | `const stages`                    | LessonN.html        |
+| Lesson Path Styling  | `node-unlocked` / `node-locked` / `node-completed` | Script.js (applied), Styles.css (styled) |
+| Statistics           | `stat-value`, `stat-words`, etc.  | Dashboard.html / Script.js |
+| Theme Buttons        | `setTheme()`                      | Accessibility.js    |
+| Font Controls        | `increaseFont()`                  | Accessibility.js    |
+| Text-to-Speech       | `toggleTTS()`, `queueSpeech()`    | Accessibility.js    |
+| Background Colour    | `body {`                          | Styles.css          |
+| Dark Theme           | `body.dark`                       | Styles.css          |
+| Cards                | `.card`                           | Styles.css          |
+| Buttons              | `.settings-btn`                   | Styles.css          |
+| Login / Register     | `loginForm`, `registerForm`       | Account.js / index.html |
 
 ---
 
-# Before Making Changes
-1. Create a backup before
-2. Do 1 change at a time to minimise errors / warnings
-3. Save and go to website to check changes made
-4. If an error occurs, revert the change (CTRL+Z)
-5. If a warning occurs, note it down (HTML <!-- Example Comment -->, CSS /* Example Comment */, JS /* Example Comment */)
+# Extensions Used During Development
 
-
-# Debug Errors
-1. If an error occurs, Go Live, right click the webpage and go to Console, this will give you the error message
-
-
-# Apply Word Wrap
-1. View -> Word Wrap
-
-
-# Use <!-- TODO: Example Text --> for changes that will be done later on, for example, <!-- TODO: Theme Toggler (Light / Dark Mode) -->
-
-
-# Extensions
-# -------------------------------------------------
-# Code Spell Checker
-# Git Prefix
-# CodeSnap
-# HTML/CSS/JavaScript Snippets
-# Live Server
-# Live Share - (Collaborative Working)
-# JavaScript (ES6) code snippets
-# BLACKBOX AI / Blackbox Agent (if needed)
-# Path Intellisense
-# Prettier - Code formatter
-
-
-# How to use Live Server
-1. Install the extension
-2. Press Go Live on the bottom right on the toolbar at the bottom. Changes will be applied when the file has been saved, does not need to be repeatedly closed and started to check changes
-
-
-# References
-1. https://youtu.be/_GTMOmRrqkU?t=124
-2. https://www.w3schools.com/html/
-3. https://developer.mozilla.org/en-US/docs/Web/HTML
-4. https://www.w3schools.com/css/
-5. https://www.codecademy.com/learn/learn-css
-6. https://cssreference.io
-7. https://web.dev/learn
-8. https://www.w3schools.com/html/html_scripts.asp
-9. https://www.youtube.com/watch?v=Ihy0QziLDf0
-10. https://www.youtube.com/watch?v=xKOyDDuQSVY
-11. https://www.youtube.com/watch?v=SgmNxE9lWcY
-12. https://www.youtube.com/watch?v=aAP2k_fe99I
-13. https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API
+* Code Spell Checker
+* Git Prefix
+* CodeSnap
+* HTML/CSS/JavaScript Snippets
+* Live Server
+* Live Share (Collaborative Working)
+* JavaScript (ES6) Code Snippets
+* Path Intellisense
+* Prettier - Code Formatter
