@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 4 - Phonics</title>
+    <link rel="stylesheet" href="CSS/Styles.css">
+</head>
+
+<body>
+
+<div class="lesson-container">
+
+    <div class="lesson-header">
+        <span class="stage-indicator" id="stageIndicator"></span>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <span class="attempt-counter">Attempts: <span id="attemptCount">0</span></span>
+    </div>
+
+    <h1>Lesson 4 - Phonics</h1>
+
+    <p>
+        Phonics is sounds for letters:
+        <strong>sh, wh, th, ch, ph</strong>
+    </p>
+
+    <div class="vowel-grid">
+        <div class="vowel-card">Sh - Shade 🕶️</div>
+        <div class="vowel-card">Wh - Whale 🐳</div>
+        <div class="vowel-card">Th - Three 3️⃣</div>
+        <div class="vowel-card">Ch - Chain 🔗</div>
+        <div class="vowel-card">Ph - Phone 📱</div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-title" id="questionTitle"></div>
+        <div id="questionContent"></div>
+    </div>
+
+    <p id="result"></p>
+    <div class="explanation" id="explanation"></div>
+
+    <div>
+        <button id="hint-btn" class="hint-btn" onclick="showHintModal()">💡 Get Hint</button>
+        <button id="repeat-btn" class="hint-btn" onclick="repeatSentence()" style="background: #e0e7ff; color: #4361ee; display:none;">
+            🔊 Read Again
+        </button>
+    </div>
+
+    <button id="next-btn" class="next-btn" onclick="nextStage(4)" style="display:none;">
+        Next Stage →
+    </button>
+
+</div>
+
+<script>
+    const stages = {
+        1: {
+            title: "Stage 1 - Sound Recognition",
+            question: "Which sound starts with the word Whale?",
+            hints: ["Think of a big ocean animal.", "Wh..."],
+            explanation: "Whale starts with 'Wh'. Phonics teaches us how letter combinations make sounds together!",
+            options: [
+                { text: "Wh", correct: true },
+                { text: "Ph", correct: false },
+                { text: "Ch", correct: false },
+                { text: "Th", correct: false },
+                { text: "Sh", correct: false }
+            ]
+        },
+        2: {
+            title: "Stage 2 - Sound Matching",
+            question: "Which word has the 'Th' sound?",
+            hints: ["It's a number.", "Th..."],
+            explanation: "Three has the 'Th' sound. Say it slowly: T-H-ree. Both letters work together!",
+            options: [
+                { text: "Shade 🕶️", correct: false },
+                { text: "Whale 🐳", correct: false },
+                { text: "Three 3️⃣", correct: true },
+                { text: "Chain 🔗", correct: false },
+                { text: "Phone 📱", correct: false }
+            ]
+        },
+        3: {
+            title: "Stage 3 - 'Ch' Sound",
+            question: "Which word has the 'Ch' sound?",
+            hints: ["It's made of metal links.", "Ch..."],
+            explanation: "Chain has the 'Ch' sound. When C and H work together, they make a special sound!",
+            options: [
+                { text: "Shade 🕶️", correct: false },
+                { text: "Whale 🐳", correct: false },
+                { text: "Three 3️⃣", correct: false },
+                { text: "Chain 🔗", correct: true },
+                { text: "Phone 📱", correct: false }
+            ]
+        },
+        4: {
+            title: "Stage 4 - 'Ph' Sound",
+            question: "Which word starts with the 'Ph' sound?",
+            hints: ["It's a device you use to call people.", "Ph..."],
+            explanation: "Phone has the 'Ph' sound. 'Ph' sounds like 'F' even though it looks different!",
+            options: [
+                { text: "Shade 🕶️", correct: false },
+                { text: "Whale 🐳", correct: false },
+                { text: "Three 3️⃣", correct: false },
+                { text: "Chain 🔗", correct: false },
+                { text: "Phone 📱", correct: true }
+            ]
+        },
+        5: {
+            title: "Stage 5 - Master Phonics",
+            question: "Which word has the 'Sh' sound?",
+            hints: ["It provides protection from the sun.", "Sh..."],
+            explanation: "Shade has the 'Sh' sound. You use it to stay cool. Great job learning phonics!",
+            options: [
+                { text: "Shade 🕶️", correct: true },
+                { text: "Whale 🐳", correct: false },
+                { text: "Three 3️⃣", correct: false },
+                { text: "Chain 🔗", correct: false },
+                { text: "Phone 📱", correct: false }
+            ]
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", () => initLesson(4));
+</script>
+
+<script src="JS/Lessons.js"></script>
+<script src="JS/Accessibility.js"></script>
+
+</body>
+</html>

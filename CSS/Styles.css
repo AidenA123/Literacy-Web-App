@@ -1,0 +1,1350 @@
+/* ==============================
+   GLOBAL SETTINGS
+============================== */
+:root {
+    --font-size: 14px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==============================
+   PAGE BACKGROUND
+============================== */
+body {
+  background: #EEF2FF;
+  padding: 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: var(--font-size);
+  color: #0F172A;
+  min-height: 100vh;
+}
+
+body.center-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==============================
+   LOGIN / REGISTER PAGE CENTERING
+   (only applies when body has class="login-page")
+============================== */
+body.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==============================
+   LOGIN / REGISTER STYLE (Index.html)
+============================== */
+.auth-container {
+  width: 100%;
+  padding: 20px;
+}
+
+.auth-card {
+  max-width: 420px;
+  margin: auto;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+.auth-tabs {
+  display: flex;
+  margin-bottom: 25px;
+  background: #eef2ff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tab-btn {
+  flex: 1;
+  border: none;
+  padding: 14px;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 700;
+  transition: .3s;
+}
+
+.tab-btn.active {
+  background: #4361ee;
+  color: white;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.auth-form h2 {
+  text-align: center;
+  color: #111827;
+}
+
+.form-subtitle {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 15px;
+  transition: .3s;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: #4361ee;
+  box-shadow: 0 0 0 4px rgba(67,97,238,.15);
+}
+
+.auth-btn {
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  background: #4361ee;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.auth-btn:hover {
+  background: #3651d4;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ==============================
+   DARK THEME STYLES
+============================== */
+body.dark .login-card {
+  background: #1A2540;
+  border-color: #2D3F5E;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+body.dark .brand-mark {
+  background: #2D3F5E;
+}
+
+body.dark .label,
+body.dark .input {
+  color: #F1F5F9;
+}
+
+body.dark .input {
+  background: #101A33;
+  border-color: #2D3F5E;
+}
+
+body.dark .input:focus {
+  box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2);
+}
+
+body.dark .login-subtitle,
+body.dark .check,
+body.dark .link,
+body.dark .divider,
+body.dark .theme-hint {
+  color: #94A3B8;
+}
+
+body.dark .secondary-btn {
+  border-color: #2D3F5E;
+  color: #A5B4FC;
+}
+
+body.dark .secondary-btn:hover {
+  background: rgba(67, 97, 238, 0.12);
+}
+
+body.dark .login-error {
+  color: #F87171;
+}
+body.dark {
+  background: #0B1120;
+  color: #F1F5F9;
+}
+
+body.dark .card {
+  background: #1A2540;
+  border-color: #2D3F5E;
+}
+
+body.dark .stat-icon {
+  background: #2D3F5E;
+}
+
+body.dark .app-details {
+  color: #94A3B8;
+}
+
+body.dark .goal-percentage {
+  color: #94A3B8;
+}
+
+body.dark .selected-lesson-desc {
+  color: #94A3B8;
+}
+
+body.dark .stat-name {
+  color: #94A3B8;
+}
+
+body.dark .settings-label {
+  color: #94A3B8;
+}
+
+body.dark .settings-btn {
+  border-color: #2D3F5E;
+  color: #94A3B8;
+}
+
+/* ==============================
+   LESSON SUMMARY - DARK MODE
+============================== */
+/* Stage breakdown box */
+body.dark .lesson-container div[style*="background: #f0f4ff"],
+body.dark .lesson-container div[style*="background:#f0f4ff"] {
+  background: #0F1E3A !important;
+  border: 1px solid #2D3F5E !important;
+}
+
+/* "Average Score" grey text */
+body.dark .lesson-container p[style*="color: #666"],
+body.dark .lesson-container p[style*="color:#666"] {
+  color: #94A3B8 !important;
+}
+
+/* Stage percentage grey text inside breakdown */
+body.dark .lesson-container span[style*="color: #666"],
+body.dark .lesson-container span[style*="color:#666"] {
+  color: #94A3B8 !important;
+}
+
+/* Stage breakdown heading and stage labels */
+body.dark .lesson-container h1,
+body.dark .lesson-container h3 {
+  color: #F1F5F9 !important;
+  background: transparent !important;
+}
+
+/* Stage breakdown row text */
+body.dark .lesson-container div[style*="text-align: left"] span:first-child {
+  color: #CBD5E1 !important;
+}
+
+/* Stars Earned text */
+body.dark .lesson-container p[style*="color: #4361ee"],
+body.dark .lesson-container p[style*="color:#4361ee"] {
+  color: #818CF8 !important;
+}
+
+/* ==============================
+   LESSON SUMMARY - HIGH CONTRAST
+============================== */
+/* Force question box to black background */
+body.high-contrast .question-container {
+  background: #000 !important;
+  border: 2px solid #fff !important;
+}
+
+/* Stage title and question text inside the question box */
+body.high-contrast .question-title,
+body.high-contrast .question-container p,
+body.high-contrast .question-container div {
+  color: #fff !important;
+}
+
+/* Stage indicator text (Stage 1 of 5) */
+body.high-contrast .stage-indicator {
+  color: #fff !important;
+}
+
+/* Attempt counter */
+body.high-contrast .attempt-counter {
+  color: #fff !important;
+}
+
+/* Progress bar track - make visible */
+body.high-contrast .progress-bar-container {
+  background: #444 !important;
+  border: 1px solid #fff !important;
+}
+
+/* Explanation box */
+body.high-contrast .explanation {
+  background: #000 !important;
+  border-left: 4px solid #fff !important;
+  color: #fff !important;
+}
+
+/* Option buttons inside question container */
+body.high-contrast .option-btn {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+body.high-contrast .option-btn:hover {
+  background: #222 !important;
+}
+
+/* ==============================
+   LESSON SUMMARY - STAR SIZE
+============================== */
+.lesson-container div[style*="text-align: center"] p[style*="font-size: 48px"] {
+  font-size: 24px !important;
+  line-height: 1.6 !important;
+  word-break: break-word !important;
+  white-space: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+/* ==============================
+   HIGH CONSTRAST STYLE
+============================== */
+body.high-contrast {
+  background: #000 !important;
+  color: #fff !important;
+}
+
+/* Force all text to be readable */
+body.high-contrast * {
+  color: #fff !important;
+}
+
+/* Keep buttons readable */
+body.high-contrast button {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+/* Cards */
+body.high-contrast .card {
+  background: #111 !important;
+  border: 2px solid #fff !important;
+}
+
+/* Links */
+body.high-contrast a {
+  color: #ffff00 !important;
+}
+
+/* Inputs */
+body.high-contrast input,
+body.high-contrast textarea,
+body.high-contrast select {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #fff !important;
+}
+
+/* ==============================
+   GRID LAYOUT
+============================== */
+.grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "appinfo   selected"
+    "learning  selected"
+    "settings  statistics";
+  gap: 14px;
+  align-items: start;
+}
+
+/* ==============================
+   CARD BASE (shared by all cards)
+============================== */
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #E2E8F8;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* ==============================
+   CARD 1: App Info & Daily Goal
+============================== */
+.card-app-info {
+  grid-area: appinfo;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 20px;
+}
+
+/* ==============================
+   App Name (Literacy App)
+============================== */
+.app-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* ==============================
+   App Details (Level, XP)
+============================== */
+.app-details {
+  color: #64748B;
+  font-size: 0.85rem;
+  margin-top: 3px;
+}
+
+/* ==============================
+   Daily Goal Title
+============================== */
+.goal-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+/* ==============================
+   Progress Bar Container
+============================== */
+.goal-bar {
+  height: 6px;
+  background: #E2E8F8;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+/* ==============================
+   Goal Progress Bar Fill
+============================== */
+.goal-fill {
+  height: 100%;
+  background: #22C55E;
+  border-radius: 99px;
+}
+
+/* ==============================
+   Goal Percentage Text
+============================== */
+.goal-percentage {
+  color: #64748B;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+/* ==============================
+   CARD 2: Selected Lesson
+============================== */
+.card-selected-lesson {
+  grid-area: selected;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  height: 100%;
+}
+
+/* ==============================
+   Selected Lesson Title
+============================== */
+.selected-lesson-title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ==============================
+   Selected Lesson Description
+============================== */
+.selected-lesson-desc {
+  color: #64748B;
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+/* ==============================
+   Selected Lesson XP Reward
+============================== */
+.selected-lesson-xp {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #4361EE;
+}
+
+/* ==============================
+   Start Lesson Button
+============================== */
+.start-btn {
+  margin-top: auto;
+  padding: 10px 20px;
+  background: #4361EE;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.start-btn:hover {
+  background: #3451D1;
+}
+
+.start-btn:disabled {
+  background: #3D4F6B;
+  color: #94A3B8;
+  cursor: not-allowed;
+}
+
+/* ==============================
+   CARD 3: Learning / Lesson Nodes
+============================== */
+.card-learning {
+  grid-area: learning;
+  padding: 18px 20px;
+}
+
+/* ==============================
+   Learning Card Title
+============================== */
+.learning-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+/* ==============================
+   Nodes Container
+============================== */
+.nodes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* ==============================
+   Individual Lesson Node
+============================== */
+.node {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #ffffff;
+}
+
+/* ==============================
+   Unlocked Lesson Node
+============================== */
+.node-unlocked {
+  background: #4361EE;
+}
+
+/* ==============================
+   Locked Lesson Node
+============================== */
+.node-locked {
+  background: #3D4F6B;
+}
+
+/* ==============================
+   Lock Icon Inside Node
+============================== */
+.lock-icon {
+  margin-left: 10px;
+  font-size: 0.8rem;
+}
+
+/* ==============================
+   Arrow Between Nodes
+============================== */
+.node-arrow {
+  padding: 3px 0 3px 14px;
+  color: #F59E0B;
+  font-size: 0.875rem;
+}
+
+/* ==============================
+   CARD 4: Statistics
+============================== */
+.card-statistics {
+  grid-area: statistics;
+  padding: 18px 20px;
+  height: fit-content;
+}
+
+/* ==============================
+   Statistics Title
+============================== */
+.statistics-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+/* ==============================
+   Statistics List
+============================== */
+.stat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ==============================
+   Individual Statistics Row
+============================== */
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ==============================
+   Statistics Icon Box
+============================== */
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #EEF0FD;
+  border-radius: 10px;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+/* ==============================
+   Statistics Label
+============================== */
+.stat-name {
+  color: #64748B;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+/* ==============================
+   Statistics Value
+============================== */
+.stat-value {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-top: 2px;
+}
+
+/* ==============================
+   CARD 5: Settings
+============================== */
+.card-settings {
+  grid-area: settings;
+  padding: 18px 20px;
+  height: fit-content;
+}
+
+/* ==============================
+   Settings Title
+============================== */
+.settings-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+/* ==============================
+   Settings Sub-Label
+============================== */
+.settings-label {
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 8px;
+}
+
+/* ==============================
+   Settings Button Row
+============================== */
+.settings-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.settings-row:last-child {
+  margin-bottom: 0;
+}
+
+/* ==============================
+   Individual Settings Buttons
+============================== */
+.settings-btn {
+  padding: 7px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #E2E8F8;
+  background: transparent;
+  color: #64748B;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* ==============================
+   Settings Button Hover
+============================== */
+.settings-btn:hover {
+  border-color: #4361EE;
+  color: #4361EE;
+}
+
+/* ==============================
+   Active / Selected Settings Buttons
+============================== */
+.settings-btn--active {
+  background: #EEF0FD;
+  color: #4361EE;
+  border-color: #4361EE;
+}
+
+/* ==============================
+   TTS Button - Active (ON) State
+   Solid, noticeable fill so it clearly stands out
+   from the other settings buttons when enabled
+============================== */
+.tts-btn--on {
+  background: #4361EE;
+  color: #ffffff;
+  border-color: #4361EE;
+}
+
+.tts-btn--on:hover {
+  background: #3451D1;
+  color: #ffffff;
+}
+
+/* ==============================
+   LESSONS STYLING
+============================== */
+.lesson-container {
+  max-width: 700px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Title */
+.lesson-container h1 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+/* Paragraph text */
+.lesson-container p {
+  color: #64748B;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Section heading */
+.lesson-container h2 {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ==============================
+   VOWEL GRID
+============================== */
+.vowel-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Vowel cards */
+.vowel-card {
+  background: #EEF2FF;
+  border: 1px solid #E2E8F8;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  font-weight: 700;
+  color: #4361EE;
+  transition: 0.2s ease;
+  cursor: default;
+}
+
+.vowel-card:hover {
+  transform: translateY(-2px);
+  background: #E0E7FF;
+}
+
+/* ==============================
+   LESSON HEADER / PROGRESS
+============================== */
+.lesson-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e7ff;
+}
+
+.stage-indicator {
+  font-weight: 700;
+  color: #4361ee;
+  font-size: 16px;
+}
+
+.progress-bar-container {
+  flex: 1;
+  margin: 0 20px;
+  height: 8px;
+  background: #e0e7ff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4361ee, #7c3aed);
+  transition: width 0.3s ease;
+}
+
+.attempt-counter {
+  font-size: 14px;
+  color: #666;
+}
+
+/* ==============================
+   QUESTION CONTAINER
+============================== */
+.question-container {
+  margin: 30px 0;
+  padding: 20px;
+  background: #f8faff;
+  border-radius: 12px;
+}
+
+.question-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 15px;
+}
+
+/* ==============================
+   QUIZ — OPTION BUTTONS
+============================== */
+.options-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.option-btn {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  padding: 15px;
+  border: 2px solid #d1d5db;
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  width: 100%;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.option-btn:hover:not(:disabled) {
+  border-color: #4361ee;
+  background: #f0f4ff !important;
+  color: #4361ee !important;
+}
+
+.option-btn:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed;
+}
+
+/* ==============================
+   QUIZ — SHARED CHROME
+============================== */
+/* Override the broad .lesson-container button rule for quiz buttons
+   so option-btn, hint-btn, next-btn all get their own looks */
+.lesson-container button.option-btn,
+.lesson-container button.hint-btn,
+.lesson-container button.next-btn,
+.lesson-container button.submit-btn {
+  margin-right: 0;
+  border: none;
+}
+
+#result {
+  margin: 15px 0;
+  font-weight: 600;
+  min-height: 25px;
+}
+
+.explanation {
+  margin-top: 15px;
+  padding: 12px;
+  background: #dbeafe;
+  border-left: 4px solid #4361ee;
+  border-radius: 4px;
+  color: #1e40af;
+  font-size: 14px;
+  display: none;
+}
+
+.hint-btn {
+  background: #FCD34D !important;
+  color: #78350f !important;
+  border: none !important;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  margin: 10px 5px 10px 0;
+}
+
+.hint-btn:disabled {
+  background: #d1d5db !important;
+  color: #666 !important;
+  cursor: not-allowed;
+}
+
+.next-btn {
+  background: #22C55E !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 15px;
+}
+
+.next-btn:hover {
+  background: #16a34a !important;
+}
+
+/* Complete button */
+#complete-btn {
+  margin-top: 16px;
+  padding: 12px;
+  background: #22C55E;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+#complete-btn:hover {
+  background: #16A34A;
+}
+
+/* ==============================
+   LESSON 5 — IMAGE / TYPING
+============================== */
+.image-display {
+  text-align: center;
+  margin: 24px 0;
+  padding: 30px;
+  background: #f8faff;
+  border-radius: 16px;
+  border: 2px dashed #c7d2fe;
+}
+
+.image-emoji {
+  font-size: 96px;
+  display: block;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  user-select: none;
+}
+
+.image-label {
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.typing-area {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  align-items: center;
+}
+
+.typing-input {
+  flex: 1;
+  padding: 14px 18px;
+  font-size: 18px;
+  font-family: inherit;
+  font-weight: 600;
+  border: 2px solid #d1d5db;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s;
+  background: white;
+  color: #0f172a;
+  letter-spacing: 0.05em;
+}
+
+.typing-input:focus {
+  border-color: #4361ee;
+}
+
+.typing-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #f1f5f9;
+}
+
+.submit-btn {
+  padding: 14px 24px;
+  background: #4361ee !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.submit-btn:hover {
+  background: #3451d1 !important;
+}
+
+.submit-btn:disabled {
+  background: #94a3b8 !important;
+  cursor: not-allowed;
+}
+
+/* Letter tiles */
+.letter-tiles {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 14px 0;
+  flex-wrap: wrap;
+}
+
+.letter-tile {
+  width: 44px;
+  height: 50px;
+  border: 2px solid #c7d2fe;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #4361ee;
+  background: #eef2ff;
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+
+.letter-tile.filled {
+  border-color: #4361ee;
+  background: #e0e7ff;
+}
+
+.letter-tile.correct {
+  border-color: #22c55e;
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.letter-tile.incorrect {
+  border-color: #ef4444;
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* ==============================
+   NODES & ARROWS
+============================== */
+.node-completed {
+  background: #14532d;
+  border: 2px solid #22c55e;
+  color: #dcfce7;
+}
+
+.node-arrow {
+  text-align: center;
+  font-size: 18px;
+  color: #9ca3af;
+  margin: 5px 0;
+}
+
+/* ==============================
+   DARK MODE
+============================== */
+body.dark .lesson-container {
+  background: #1A2540;
+  color: #F1F5F9;
+}
+
+body.dark .lesson-container h1,
+body.dark .lesson-container h2 {
+  background: #1A2540;
+  color: #F1F5F9;
+}
+
+body.dark .lesson-container p {
+  color: #94A3B8;
+}
+
+body.dark .vowel-card {
+  background: #0B1120;
+  border-color: #2D3F5E;
+  color: #A5B4FC;
+}
+
+body.dark .lesson-header {
+  border-bottom-color: #2d3f5e;
+}
+
+body.dark .stage-indicator {
+  color: #818cf8;
+}
+
+body.dark .progress-bar-container {
+  background: #2d3f5e;
+}
+
+body.dark .attempt-counter {
+  color: #94a3b8;
+}
+
+body.dark .question-container {
+  background: #0f1e3a;
+}
+
+body.dark .question-title {
+  color: #f1f5f9;
+}
+
+/* Option buttons in dark mode */
+body.dark .option-btn {
+  background: #0B1120 !important;
+  color: #F1F5F9 !important;
+  border-color: #2D3F5E !important;
+}
+
+body.dark .option-btn:hover:not(:disabled) {
+  background: #1e2d5a !important;
+  border-color: #818cf8 !important;
+  color: #a5b4fc !important;
+}
+
+body.dark .explanation {
+  background: #1e2d5a;
+  color: #a5b4fc;
+  border-left-color: #818cf8;
+}
+
+body.dark .hint-btn {
+  background: #92400e !important;
+  color: #fde68a !important;
+}
+
+body.dark .hint-btn:disabled {
+  background: #374151 !important;
+  color: #9ca3af !important;
+}
+
+/* Lesson 5 dark mode */
+body.dark .image-display {
+  background: #0f1e3a;
+  border-color: #2d3f5e;
+}
+
+body.dark .typing-input {
+  background: #1a2540;
+  border-color: #2d3f5e;
+  color: #f1f5f9;
+}
+
+body.dark .typing-input:focus {
+  border-color: #818cf8;
+}
+
+body.dark .typing-input:disabled {
+  background: #0f1e3a;
+}
+
+body.dark .letter-tile {
+  background: #1a2540;
+  border-color: #2d3f5e;
+  color: #818cf8;
+}
+
+body.dark .letter-tile.filled {
+  border-color: #818cf8;
+  background: #1e2d5a;
+}
+
+body.dark .letter-tile.correct {
+  background: #14532d;
+  border-color: #22c55e;
+  color: #86efac;
+}
+
+body.dark .letter-tile.incorrect {
+  background: #450a0a;
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+/* ==============================
+   HIGH CONTRAST
+============================== */
+body.high-contrast .lesson-container {
+  background: #000;
+  border: 2px solid #fff;
+}
+
+body.high-contrast .lesson-container p,
+body.high-contrast .lesson-container h1,
+body.high-contrast .lesson-container h2 {
+  color: #fff !important;
+}
+
+body.high-contrast .vowel-card {
+  background: #000;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+body.high-contrast .question-container {
+  background: #000;
+  border: 1px solid #fff;
+}
+
+body.high-contrast .question-title {
+  color: #fff;
+}
+
+body.high-contrast .option-btn {
+  background: #000 !important;
+  border: 2px solid #fff !important;
+  color: #fff !important;
+}
+
+body.high-contrast .option-btn:hover:not(:disabled) {
+  background: #111 !important;
+  border-color: #ff0 !important;
+  color: #ff0 !important;
+}
+
+body.high-contrast .hint-btn {
+  background: #000 !important;
+  border: 2px solid #ff0 !important;
+  color: #ff0 !important;
+}
+
+body.high-contrast .next-btn {
+  background: #000 !important;
+  border: 2px solid #0f0 !important;
+  color: #0f0 !important;
+}
+
+body.high-contrast #complete-btn {
+  background: #000;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+body.high-contrast #result {
+  color: #fff;
+}
+
+body.high-contrast .explanation {
+  background: #000;
+  border-left-color: #fff;
+  color: #fff;
+}
+
+/* Lesson 5 high contrast */
+body.high-contrast .image-display {
+  background: #000;
+  border: 2px solid #fff;
+}
+
+body.high-contrast .typing-input {
+  background: #000;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+body.high-contrast .letter-tile {
+  background: #000;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+body.high-contrast .letter-tile.correct {
+  background: #000;
+  border-color: #0f0;
+  color: #0f0;
+}
+
+body.high-contrast .letter-tile.incorrect {
+  background: #000;
+  border-color: #f00;
+  color: #f00;
+}

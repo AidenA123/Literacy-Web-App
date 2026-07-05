@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 5 - Type What You See</title>
+    <link rel="stylesheet" href="CSS/Styles.css">
+</head>
+
+<body>
+
+<div class="lesson-container">
+
+    <div class="lesson-header">
+        <span class="stage-indicator" id="stageIndicator"></span>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <span class="attempt-counter">Attempts: <span id="attemptCount">0</span></span>
+    </div>
+
+    <h1>Lesson 5 - Type What You See</h1>
+    <p>Look at the image and type the word you see. Try to spell it correctly!</p>
+
+    <!-- Emoji image display -->
+    <div class="image-display">
+        <span class="image-emoji" id="stageEmoji"></span>
+        <span class="image-label">What word do you see?</span>
+    </div>
+
+    <!-- Letter count tiles -->
+    <div class="letter-tiles" id="letterTiles"></div>
+
+    <!-- Typing input -->
+    <div class="typing-area">
+        <input
+            type="text"
+            class="typing-input"
+            id="typing-input"
+            placeholder="Type the word here..."
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            maxlength="20"
+        />
+        <button class="submit-btn" id="submit-btn" onclick="handleTypingAnswer()">
+            Check ✓
+        </button>
+    </div>
+
+    <p id="result"></p>
+    <div class="explanation" id="explanation"></div>
+
+    <div>
+        <button id="hint-btn" class="hint-btn" onclick="showHintModal()">💡 Get Hint</button>
+        <button id="repeat-btn" class="hint-btn" onclick="repeatSentence()" style="background:#e0e7ff;color:#4361ee;display:none;">🔊 Read Again</button>
+    </div>
+
+    <button id="next-btn" class="next-btn" onclick="nextStage(5)" style="display:none;">Next Stage →</button>
+
+</div>
+
+<script src="JS/Lessons.js"></script>
+<script src="JS/Accessibility.js"></script>
+
+<script>
+    /* =========================================================
+       SUPPRESS GENERIC PAGE READER
+       autoReadLesson() in Accessibility.js fires on window load
+       and reads all page elements generically. Lesson 5 handles
+       its own TTS inside initLesson, so we override it here
+       with a no-op to prevent both systems firing at once.
+    ========================================================= */
+    function autoReadLesson() {}
+
+    /* =========================================================
+       STAGE DATA
+       Words drawn from the APP Key Word List and Phonics
+       Progression document, ordered by phonics complexity.
+       Hints are phonics-informed — they name the grapheme or
+       blending strategy the learner should use.
+    ========================================================= */
+    const stages = {
+
+        /* ----- Stage 1 -----
+           Word:  FLAG  (phonics breakdown: f/l/a/g)
+           Focus: FL consonant blend + short vowel 'a'
+           From:  Phonics Progression Level 1
+        ---------------------------------------------------- */
+        1: {
+            title: "Stage 1 - Consonant Blends",
+            emoji: "🚩",
+            word: "flag",
+            accepted: ["flag"],
+            hints: [
+                "It has 4 letters. Have a go at sounding each one out: f… l… a… g. You might spot one flying at the seaside, on top of a castle, or in the school playground!",
+                "It starts with the blend FL — two letters that work together to make one quick sound, like in 'flat' and 'flip'. Then comes a short 'a' and the letter G. Blend it together: fl-ag!"
+            ],
+            explanation: "The word is FLAG 🚩. F-L-A-G. The letters F and L blend together at the start to make the /fl/ sound. The A in the middle is a short vowel, just like in 'cat' and 'hat'. Brilliant work!"
+        },
+
+        /* ----- Stage 2 -----
+           Word:  SNAIL  (phonics breakdown: s/n/ai/l)
+           Focus: 'ai' vowel digraph (long A sound)
+           From:  Phonics Progression Level 2
+        ---------------------------------------------------- */
+        2: {
+            title: "Stage 2 - Vowel Digraphs",
+            emoji: "🐌",
+            word: "snail",
+            accepted: ["snail"],
+            hints: [
+                "It has 5 letters. You might spot one of these in the garden after a rainy day — it moves ever so slowly and carries its shell on its back! Listen carefully for a long 'ay' sound hiding inside.",
+                "It starts with the blend SN and ends with L. The long 'ay' sound in the middle is spelled A-I — two vowels that go together to make one sound. Break it up: sn + ai + l. Have a go!"
+            ],
+            explanation: "The word is SNAIL 🐌. S-N-A-I-L. The letters A and I sit next to each other and together they make the long 'ay' sound. You'll find the same 'ai' grapheme in words like 'pain', 'rain', and 'train'. Well done!"
+        },
+
+        /* ----- Stage 3 -----
+           Word:  STORM  (phonics breakdown: s/t/or/m)
+           Focus: 'or' vowel digraph
+           From:  Phonics Progression Level 3
+        ---------------------------------------------------- */
+        3: {
+            title: "Stage 3 - The 'or' Sound",
+            emoji: "⛈️",
+            word: "storm",
+            accepted: ["storm"],
+            hints: [
+                "It has 5 letters. We get plenty of these in Britain — lots of wind, rain, thunder, and lightning! Listen out for the 'or' sound hiding in the middle, the same one you hear in 'fork' and 'morning'.",
+                "It starts with the blend ST and ends with M. The middle part is the 'or' grapheme — O and R together make one sound. Break it apart: st + or + m. What do you get?"
+            ],
+            explanation: "The word is STORM ⛈️. S-T-O-R-M. The letters O and R together make the /or/ sound. You'll hear that same sound in 'fork', 'torch', 'corn', and 'north' — all from your phonics list. Smashing!"
+        },
+
+        /* ----- Stage 4 -----
+           Word:  POINT  (phonics breakdown: p/oi/n/t)
+           Focus: 'oi' vowel digraph
+           From:  Phonics Progression Level 5
+        ---------------------------------------------------- */
+        4: {
+            title: "Stage 4 - The 'oi' Sound",
+            emoji: "👉",
+            word: "point",
+            accepted: ["point"],
+            hints: [
+                "It has 5 letters. You do this with your finger when you want to show someone where something is! Listen out for the special 'oi' sound hiding inside — the same one you hear in 'boy' and 'toy'.",
+                "It starts with P and ends with NT. The 'oi' in the middle is a vowel pair — O and I together make one special sound. Break it apart: p + oi + nt. Have a go!"
+            ],
+            explanation: "The word is POINT 👉. P-O-I-N-T. The letters O and I together make the /oy/ sound. You'll spot the same 'oi' grapheme in 'soil', 'boil', 'joint', and 'coin' — all from your phonics progression. Fantastic!"
+        },
+
+        /* ----- Stage 5 -----
+           Word:  DOLPHIN  (phonics breakdown: d/o/l/ph/i/n)
+           Focus: 'ph' grapheme = /f/ sound
+           From:  Phonics Progression (ph level) + Key Word List
+        ---------------------------------------------------- */
+        5: {
+            title: "Stage 5 - The Tricky 'ph' Sound",
+            emoji: "🐬",
+            word: "dolphin",
+            accepted: ["dolphin"],
+            hints: [
+                "It has 7 letters! These clever sea creatures sometimes swim around the British coastline. Break the word into two chunks to make it easier: DOL + PHIN. Say each part aloud, then put them together.",
+                "Watch out — the /f/ sound in this word is NOT the letter F! It's spelled PH instead. P and H together make an /f/ sound. So it's: d-o-l + ph-i-n. You'll find the same PH trick in 'elephant', 'phone', and 'phonics'!"
+            ],
+            explanation: "The word is DOLPHIN 🐬. D-O-L-P-H-I-N. The tricky part is PH — those two letters together make an /f/ sound. You'll find the same PH in 'elephant', 'alphabet', 'phone', and even the word 'phonics' itself. Absolutely brilliant!"
+        }
+    };
+
+    /* =========================================================
+       TYPING LESSON INIT
+       Overrides the shared initLesson from Lessons.js since
+       this lesson uses a text input instead of option buttons.
+    ========================================================= */
+    function initLesson(lessonNumber) {
+        currentLesson = lessonNumber;
+        hintIndex = 0;
+        attemptCount = 0;
+        correctOnFirstTry = false;
+        hintsUsed = 0;
+
+        // Start the lesson timer — only records the time on the very first stage
+        startLessonTimer(lessonNumber);
+
+        const stage = getCurrentStage(lessonNumber);
+        const stageData = stages[stage];
+
+        // Header
+        document.getElementById("stageIndicator").textContent = getStageProgress(lessonNumber);
+        document.getElementById("progressBar").style.width = `${(stage / 5) * 100}%`;
+        document.getElementById("attemptCount").textContent = "0";
+
+        // Emoji display
+        document.getElementById("stageEmoji").textContent = stageData.emoji;
+
+        // Reset input
+        const input = document.getElementById("typing-input");
+        input.value = "";
+        input.disabled = false;
+        input.focus();
+
+        // Reset submit button
+        const submitBtn = document.getElementById("submit-btn");
+        submitBtn.disabled = false;
+
+        // Reset result and explanation
+        document.getElementById("result").textContent = "";
+        document.getElementById("explanation").style.display = "none";
+
+        // Reset hint button
+        const hintBtn = document.getElementById("hint-btn");
+        hintBtn.disabled = false;
+        hintBtn.textContent = "💡 Get Hint";
+
+        // Hide next button
+        document.getElementById("next-btn").style.display = "none";
+
+        // Build blank letter tiles
+        renderLetterTiles(stageData.word, "");
+
+        // Update tiles as user types
+        input.addEventListener("input", () => {
+            renderLetterTiles(stageData.word, input.value);
+        });
+
+        // Allow Enter key to submit
+        input.onkeydown = (e) => {
+            if (e.key === "Enter") handleTypingAnswer();
+        };
+
+        // TTS: read lesson title, description, then name the image.
+        // The emoji itself cannot be spoken reliably, so we use the
+        // word name instead — this is accessibility info, not a spoiler,
+        // as the learner still has to spell it correctly themselves.
+        if (typeof ttsEnabled !== "undefined" && ttsEnabled) {
+            queueSpeech([
+                "Lesson 5 — Type What You See.",
+                "Look at the image and type the word you see. Try to spell it correctly!",
+                `The image shows: ${stageData.word}.`
+            ]);
+        }
+    }
+
+    /* =========================================================
+       LETTER TILES
+       Shows one tile per letter in the target word, filling
+       in the letters the user has typed so far.
+    ========================================================= */
+    function renderLetterTiles(word, typed, finalState = null) {
+        const container = document.getElementById("letterTiles");
+        container.innerHTML = "";
+
+        for (let i = 0; i < word.length; i++) {
+            const tile = document.createElement("div");
+            tile.className = "letter-tile";
+
+            if (finalState === "correct") {
+                tile.textContent = word[i].toUpperCase();
+                tile.classList.add("correct");
+            } else if (finalState === "incorrect") {
+                // Show what the user typed vs what was correct
+                if (typed[i]) {
+                    tile.textContent = typed[i].toUpperCase();
+                    tile.classList.add(typed[i].toLowerCase() === word[i].toLowerCase() ? "correct" : "incorrect");
+                } else {
+                    tile.textContent = "_";
+                    tile.classList.add("incorrect");
+                }
+            } else if (typed[i]) {
+                tile.textContent = typed[i].toUpperCase();
+                tile.classList.add("filled");
+            } else {
+                tile.textContent = "";
+            }
+
+            container.appendChild(tile);
+        }
+    }
+
+    /* =========================================================
+       ANSWER CHECKING
+    ========================================================= */
+    function handleTypingAnswer() {
+        const stage = getCurrentStage(currentLesson);
+        const stageData = stages[stage];
+        const input = document.getElementById("typing-input");
+        const result = document.getElementById("result");
+        const explanation = document.getElementById("explanation");
+        const nextBtn = document.getElementById("next-btn");
+        const hintBtn = document.getElementById("hint-btn");
+        const submitBtn = document.getElementById("submit-btn");
+
+        const typed = input.value.trim().toLowerCase();
+        if (!typed) return;
+
+        attemptCount++;
+        document.getElementById("attemptCount").textContent = attemptCount;
+
+        const isCorrect = stageData.accepted.includes(typed);
+
+        if (isCorrect) {
+            result.innerHTML = "<span style='font-size: 24px;'>✅ Correct! 🎉</span>";
+            result.style.color = "#22C55E";
+            explanation.textContent = stageData.explanation;
+            explanation.style.display = "block";
+            nextBtn.style.display = "inline-block";
+            if (hintBtn) hintBtn.style.display = "none";
+            input.disabled = true;
+            submitBtn.disabled = true;
+            renderLetterTiles(stageData.word, typed, "correct");
+            recordAnswer(true, true);
+            if (typeof speak !== "undefined") speak("Correct! " + stageData.word);
+        } else {
+            result.innerHTML = `<span style='font-size: 16px;'>❌ Not quite! You typed: <strong>${typed}</strong>. Try again.</span>`;
+            result.style.color = "#EF4444";
+            renderLetterTiles(stageData.word, typed, "incorrect");
+            recordAnswer(true, false);
+            if (typeof speak !== "undefined") speak("Try again");
+
+            // Shake the input
+            input.style.borderColor = "#EF4444";
+            setTimeout(() => { input.style.borderColor = ""; }, 800);
+
+            // Clear input after a short delay so user can try again
+            setTimeout(() => {
+                input.value = "";
+                renderLetterTiles(stageData.word, "");
+                input.focus();
+            }, 900);
+        }
+    }
+
+    /* =========================================================
+       HINT SYSTEM (typing version)
+    ========================================================= */
+    function showHintModal() {
+        const stage = getCurrentStage(currentLesson);
+        const stageData = stages[stage];
+
+        if (hintIndex < stageData.hints.length) {
+            showHint(stageData.hints[hintIndex]);
+            hintIndex++;
+            if (hintIndex >= stageData.hints.length) {
+                document.getElementById("hint-btn").textContent = "No more hints";
+                document.getElementById("hint-btn").disabled = true;
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => initLesson(5));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/Styles.css">
+
+    <title>Literacy App</title>
+    <link rel="icon" type="image/x-icon" href="/Assets/Images/book.ico">
+</head>
+
+<body class="center-page">
+
+<div class="grid">
+
+  <!-- CARD 1: App Info & Daily Goal -->
+  <div class="card card-app-info">
+    <div class="app-left">
+      <h2 class="app-name">Literacy App</h2>
+      <p class="app-details" id="level-text">Level 1</p>
+      <p class="app-details" id="xp-text">XP: 0</p>
+    </div>
+
+    <div class="app-right">
+      <h3 class="goal-title">Goal</h3>
+      <div class="goal-bar">
+        <div class="goal-fill" id="goal-fill"></div>
+      </div>
+      <p class="goal-percentage" id="goal-percentage">0%</p>
+    </div>
+  </div>
+
+  <!-- CARD 2: Selected Lesson -->
+  <div class="card card-selected-lesson">
+    <h3 class="selected-lesson-title" id="sel-title">Select a Lesson</h3>
+    <p class="selected-lesson-desc" id="sel-desc">Click a lesson to view details.</p>
+    <p class="selected-lesson-xp" id="sel-xp"></p>
+    <button class="start-btn" id="start-btn" onclick="startLesson()">Start Lesson</button>
+  </div>
+
+  <!-- CARD 3: Learning / Lesson Nodes -->
+  <div class="card card-learning">
+    <h3 class="learning-title">Learning</h3>
+
+    <div class="nodes">
+
+      <div class="node" data-id="1" onclick="selectLesson(1)">
+        <span>Basic Vowels</span>
+      </div>
+
+      <div class="node-arrow">↓</div>
+
+      <div class="node" data-id="2" onclick="selectLesson(2)">
+        <span>Consonants</span>
+      </div>
+
+      <div class="node-arrow">↓</div>
+
+      <div class="node" data-id="3" onclick="selectLesson(3)">
+        <span>Short Sentences</span>
+      </div>
+
+      <div class="node-arrow">↓</div>
+
+      <div class="node" data-id="4" onclick="selectLesson(4)">
+        <span>Phonics</span>
+      </div>
+
+      <div class="node-arrow">↓</div>
+
+      <div class="node" data-id="5" onclick="selectLesson(5)">
+        <span>Type What You See</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CARD 4: Statistics -->
+  <div class="card card-statistics">
+    <h3 class="statistics-title">Statistics</h3>
+
+    <div class="stat-list">
+
+      <div class="stat-item">
+        <span class="stat-icon">📚</span>
+        <div>
+          <p class="stat-name">Words Learnt</p>
+          <p class="stat-value" id="stat-words">0</p>
+        </div>
+      </div>
+
+      <div class="stat-item">
+        <span class="stat-icon">🏆</span>
+        <div>
+          <p class="stat-name">Lessons Completed</p>
+          <p class="stat-value" id="stat-lessons">0 / 5</p>
+        </div>
+      </div>
+
+      <div class="stat-item">
+        <span class="stat-icon">🔥</span>
+        <div>
+          <p class="stat-name">Current Streak</p>
+          <p class="stat-value" id="stat-streak">0 Days</p>
+        </div>
+      </div>
+
+      <div class="stat-item">
+        <span class="stat-icon">⭐</span>
+        <div>
+          <p class="stat-name">Stars Earned</p>
+          <p class="stat-value" id="stat-stars">0</p>
+        </div>
+      </div>
+
+      <div class="stat-item">
+        <span class="stat-icon">⏱️</span>
+        <div>
+          <p class="stat-name">Avg Completion Time</p>
+          <p class="stat-value" id="stat-avg-time">N/A</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CARD 5: Settings -->
+  <div class="card card-settings">
+    <h3 class="settings-title">Settings</h3>
+
+    <p class="settings-label">Theme</p>
+    <div class="settings-row">
+      <button class="settings-btn settings-btn--active" id="btn-light" onclick="setTheme('light')">☀️ Light</button>
+      <button class="settings-btn" id="btn-dark" onclick="setTheme('dark')">🌙 Dark</button>
+    </div>
+
+    <p class="settings-label">Font Size</p>
+    <div class="settings-row">
+      <button class="settings-btn" onclick="decreaseFont()">A−</button>
+      <button class="settings-btn settings-btn--active" onclick="defaultFont()">A</button>
+      <button class="settings-btn" onclick="increaseFont()">A+</button>
+    </div>
+
+    <p class="settings-label">Accessibility</p>
+    <div class="settings-row">
+      <button class="settings-btn" id="contrast-btn" onclick="toggleContrast()">⚫ High Contrast</button>
+      <button class="settings-btn" id="tts-btn" onclick="toggleTTS()">Text to Speech</button>
+    </div>
+
+    <p class="settings-label">Account</p>
+    <div class="settings-row">
+      <button class="settings-btn" onclick="logout()">Log Out</button>
+      <button class="settings-btn" onclick="resetAllProgress()" style="background-color:#EF4444;color:white;">🔄 Reset Progress</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="JS/Script.js"></script>
+<script src="JS/Accessibility.js"></script>
+
+<script>
+    /* =========================================================
+       AVERAGE COMPLETION TIME STAT
+       Reads lesson1–5 CompletionTime (seconds) from localStorage,
+       averages however many lessons have been completed, and
+       displays the result as Xm XXs in the statistics card.
+    ========================================================= */
+    function updateAvgCompletionTime() {
+        let total = 0;
+        let count = 0;
+
+        for (let i = 1; i <= 5; i++) {
+            const saved = localStorage.getItem(`lesson${i}CompletionTime`);
+            const seconds = parseInt(saved);
+            if (!isNaN(seconds) && seconds > 0) {
+                total += seconds;
+                count++;
+            }
+        }
+
+        const el = document.getElementById("stat-avg-time");
+        if (!el) return;
+
+        if (count === 0) {
+            el.textContent = "N/A";
+            return;
+        }
+
+        const avg = Math.floor(total / count);
+        const minutes = Math.floor(avg / 60);
+        const secs = avg % 60;
+        el.textContent = `${minutes}m ${secs.toString().padStart(2, "0")}s`;
+    }
+
+    document.addEventListener("DOMContentLoaded", updateAvgCompletionTime);
+</script>
+
+</body>
+</html>

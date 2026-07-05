@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 2 - Consonants</title>
+    <link rel="stylesheet" href="CSS/Styles.css">
+</head>
+
+<body>
+
+<div class="lesson-container">
+
+    <div class="lesson-header">
+        <span class="stage-indicator" id="stageIndicator"></span>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <span class="attempt-counter">Attempts: <span id="attemptCount">0</span></span>
+    </div>
+
+    <h1>Lesson 2 - Consonants</h1>
+
+    <p>
+        Consonants are the letters:
+        <strong>B, C, D, F, G</strong>
+    </p>
+
+    <div class="vowel-grid">
+        <div class="vowel-card">B - Banana 🍌</div>
+        <div class="vowel-card">C - Cat 🐈</div>
+        <div class="vowel-card">D - Dog 🐕</div>
+        <div class="vowel-card">F - Fish 🐟</div>
+        <div class="vowel-card">G - Girl 👧</div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-title" id="questionTitle"></div>
+        <div id="questionContent"></div>
+    </div>
+
+    <p id="result"></p>
+    <div class="explanation" id="explanation"></div>
+
+    <div>
+        <button id="hint-btn" class="hint-btn" onclick="showHintModal()">💡 Get Hint</button>
+        <button id="repeat-btn" class="hint-btn" onclick="repeatSentence()" style="background: #e0e7ff; color: #4361ee; display:none;">
+            🔊 Read Again
+        </button>
+    </div>
+
+    <button id="next-btn" class="next-btn" onclick="nextStage(2)" style="display:none;">
+        Next Stage →
+    </button>
+
+</div>
+
+<script>
+    const stages = {
+        1: {
+            title: "Stage 1 - Consonant Recognition",
+            question: "Which consonant starts the word Banana?",
+            hints: ["Think of a yellow fruit.", "B-B-Banana"],
+            explanation: "Banana starts with 'B'. Consonants are letters that aren't vowels (not A, E, I, O, U).",
+            options: [
+                { text: "B", correct: true },
+                { text: "C", correct: false },
+                { text: "D", correct: false },
+                { text: "F", correct: false },
+                { text: "G", correct: false }
+            ]
+        },
+        2: {
+            title: "Stage 2 - Word Matching",
+            question: "Which word starts with consonant D?",
+            hints: ["It's an animal that barks.", "D-D-Dog"],
+            explanation: "Dog starts with 'D'. Dogs are loyal pets that make great companions!",
+            options: [
+                { text: "Banana 🍌", correct: false },
+                { text: "Cat 🐈", correct: false },
+                { text: "Dog 🐕", correct: true },
+                { text: "Fish 🐟", correct: false },
+                { text: "Girl 👧", correct: false }
+            ]
+        },
+        3: {
+            title: "Stage 3 - Multiple Consonants",
+            question: "Which of these has consonants F and G?",
+            hints: ["One word starts with F, one with G.", "Fish and Girl"],
+            explanation: "Fish starts with 'F' and Girl starts with 'G'. Both are consonants we've learned!",
+            options: [
+                { text: "Banana & Cat", correct: false },
+                { text: "Fish & Girl", correct: true },
+                { text: "Dog & Cat", correct: false },
+                { text: "Banana & Dog", correct: false },
+                { text: "Fish & Cat", correct: false }
+            ]
+        },
+        4: {
+            title: "Stage 4 - Find the Missing Consonant",
+            question: "What consonant completes: _at (as in Cat)?",
+            hints: ["It's the third letter of the alphabet.", "C comes after B"],
+            explanation: "Cat starts with 'C'. The word _at + C = Cat!",
+            options: [
+                { text: "B", correct: false },
+                { text: "C", correct: true },
+                { text: "D", correct: false },
+                { text: "F", correct: false },
+                { text: "G", correct: false }
+            ]
+        },
+        5: {
+            title: "Stage 5 - Consonant Mastery",
+            question: "How many consonants (B,C,D,F,G) are in: BIG DOG?",
+            hints: ["Count: B, I, G, D, O, G", "Count only B, C, D, F, G"],
+            explanation: "BIG DOG contains: B, G, D, G = 4 consonants from our list! I and O are vowels.",
+            options: [
+                { text: "2 consonants", correct: false },
+                { text: "3 consonants", correct: false },
+                { text: "4 consonants", correct: true },
+                { text: "5 consonants", correct: false },
+                { text: "1 consonant", correct: false }
+            ]
+        }
+    };
+
+document.addEventListener("DOMContentLoaded", () => {
+    initLesson(2);
+});
+
+</script>
+
+<script src="JS/Lessons.js"></script>
+<script src="JS/Accessibility.js"></script>
+
+</body>
+</html>

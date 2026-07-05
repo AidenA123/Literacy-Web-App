@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 3 - Short Sentences</title>
+    <link rel="stylesheet" href="CSS/Styles.css">
+</head>
+
+<body>
+
+<div class="lesson-container">
+
+    <div class="lesson-header">
+        <span class="stage-indicator" id="stageIndicator"></span>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <span class="attempt-counter">Attempts: <span id="attemptCount">0</span></span>
+    </div>
+
+    <h1>Lesson 3 - Short Sentences</h1>
+
+    <div class="vowel-grid">
+        <div class="vowel-card">The - The dog barks 🔊🐶</div>
+        <div class="vowel-card">She - She wrote a book 📖🖋️👧</div>
+        <div class="vowel-card">He - He ran fast 🏃‍♂️💨</div>
+        <div class="vowel-card">Cats - Cats Hate water 💦🚫😺</div>
+        <div class="vowel-card">We - We went home 🏠🚗🧑</div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-title" id="questionTitle"></div>
+        <div id="questionContent"></div>
+    </div>
+
+    <p id="result"></p>
+    <div class="explanation" id="explanation"></div>
+
+    <div>
+        <button id="hint-btn" class="hint-btn" onclick="showHintModal()">💡 Get Hint</button>
+        <button id="repeat-btn" class="hint-btn" onclick="repeatSentence()" style="background: #e0e7ff; color: #4361ee; display:none;">
+            🔊 Read Again
+        </button>
+    </div>
+
+    <button id="next-btn" class="next-btn" onclick="nextStage(3)" style="display:none;">
+        Next Stage →
+    </button>
+
+</div>
+
+<script>
+    const stages = {
+        1: {
+            title: "Stage 1 - Sentence Recognition",
+            question: "Which sentence starts with 'The'?",
+            hints: ["It's about an animal sound.", "The dog..."],
+            explanation: "'The' is a very common word. It helps us talk about specific things. 'The dog barks' is a complete sentence!",
+            options: [
+                { text: "The dog barks 🔊🐶", correct: true },
+                { text: "She wrote a book 📖🖋️👧", correct: false },
+                { text: "He ran fast 🏃‍♂️💨", correct: false },
+                { text: "Cats Hate water 💦🚫😺", correct: false },
+                { text: "We went home 🏠🚗🧑", correct: false }
+            ]
+        },
+        2: {
+            title: "Stage 2 - Subject Identification",
+            question: "Which sentence is about a girl?",
+            hints: ["She is a girl.", "Someone wrote a book."],
+            explanation: "'She' is a pronoun that means a girl or woman. The sentence tells us she wrote a book—a complete action!",
+            options: [
+                { text: "The dog barks 🔊🐶", correct: false },
+                { text: "She wrote a book 📖🖋️👧", correct: true },
+                { text: "He ran fast 🏃‍♂️💨", correct: false },
+                { text: "Cats Hate water 💦🚫😺", correct: false },
+                { text: "We went home 🏠🚗🧑", correct: false }
+            ]
+        },
+        3: {
+            title: "Stage 3 - Action Recognition",
+            question: "Which sentence starts with 'He'?",
+            hints: ["It's about someone moving quickly.", "He ran..."],
+            explanation: "'He' is a pronoun for a boy or man. 'Ran' is the action. This sentence tells us what he did!",
+            options: [
+                { text: "The dog barks 🔊🐶", correct: false },
+                { text: "She wrote a book 📖🖋️👧", correct: false },
+                { text: "He ran fast 🏃‍♂️💨", correct: true },
+                { text: "Cats Hate water 💦🚫😺", correct: false },
+                { text: "We went home 🏠🚗🧑", correct: false }
+            ]
+        },
+        4: {
+            title: "Stage 4 - Plural Subjects",
+            question: "Which sentence uses 'We' (multiple people)?",
+            hints: ["Multiple people did something together.", "We went..."],
+            explanation: "'We' means more than one person—it's plural! This sentence tells us everyone went home together.",
+            options: [
+                { text: "The dog barks 🔊🐶", correct: false },
+                { text: "She wrote a book 📖🖋️👧", correct: false },
+                { text: "He ran fast 🏃‍♂️💨", correct: false },
+                { text: "Cats Hate water 💦🚫😺", correct: false },
+                { text: "We went home 🏠🚗🧑", correct: true }
+            ]
+        },
+        5: {
+            title: "Stage 5 - Complete Mastery",
+            question: "Which sentence has a plural animal as the first word?",
+            hints: ["Remember Stage 4 — plural means more than one! Which animal word means more than one?", "Cats means more than one cat — it is plural and sits right at the start of the sentence as the subject!"],
+            explanation: "'Cats' is a plural animal subject — it means more than one cat, and it is the very first word. 'The dog' also has an animal, but 'The' comes first and 'dog' is singular. Well done — you have mastered short sentences!",
+            options: [
+                { text: "The dog barks 🔊🐶", correct: false },
+                { text: "She wrote a book 📖🖋️👧", correct: false },
+                { text: "He ran fast 🏃‍♂️💨", correct: false },
+                { text: "Cats Hate water 💦🚫😺", correct: true },
+                { text: "We went home 🏠🚗🧑", correct: false }
+            ]
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", () => initLesson(3));
+</script>
+
+<script src="JS/Lessons.js"></script>
+<script src="JS/Accessibility.js"></script>
+
+</body>
+</html>

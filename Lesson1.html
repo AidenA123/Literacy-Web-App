@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 1 - Basic Vowels</title>
+    <link rel="stylesheet" href="CSS/Styles.css">
+</head>
+
+<body>
+
+<div class="lesson-container">
+
+    <div class="lesson-header">
+        <span class="stage-indicator" id="stageIndicator"></span>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <span class="attempt-counter">Attempts: <span id="attemptCount">0</span></span>
+    </div>
+
+    <h1>Lesson 1 - Basic Vowels</h1>
+
+    <p>
+        Vowels are the letters:
+        <strong>A, E, I, O, U</strong>
+    </p>
+
+    <div class="vowel-grid">
+        <div class="vowel-card">A - Apple 🍎</div>
+        <div class="vowel-card">E - Elephant 🐘</div>
+        <div class="vowel-card">I - Ice Cream 🍦</div>
+        <div class="vowel-card">O - Orange 🍊</div>
+        <div class="vowel-card">U - Umbrella ☂️</div>
+    </div>
+
+    <div class="question-container">
+        <div class="question-title" id="questionTitle"></div>
+        <div id="questionContent"></div>
+    </div>
+
+    <p id="result"></p>
+    <div class="explanation" id="explanation"></div>
+
+    <div>
+        <button id="hint-btn" class="hint-btn" onclick="showHintModal()">💡 Get Hint</button>
+        <button id="repeat-btn" class="hint-btn" onclick="repeatSentence()" style="background: #e0e7ff; color: #4361ee; display:none;">
+            🔊 Read Again
+        </button>
+    </div>
+
+    <button id="next-btn" class="next-btn" onclick="nextStage(1)" style="display:none;">
+        Next Stage →
+    </button>
+
+</div>
+
+<script>
+    const stages = {
+        1: {
+            title: "Stage 1 - Letter Recognition",
+            question: "Which vowel starts the word Apple?",
+            hints: ["Think of the fruit! It's round and red.", "The first letter is the same as in 'Apple'"],
+            explanation: "The word Apple starts with the vowel 'A'. Vowels are important letters that make specific sounds.",
+            options: [
+                { text: "A", correct: true },
+                { text: "E", correct: false },
+                { text: "I", correct: false },
+                { text: "O", correct: false },
+                { text: "U", correct: false }
+            ]
+        },
+        2: {
+            title: "Stage 2 - Vowel Matching",
+            question: "Which word starts with the vowel E?",
+            hints: ["Think of a large animal from Africa.", "It has a long trunk and big ears."],
+            explanation: "Elephant starts with 'E'. Pay attention to the first sound of words—that helps you identify vowels!",
+            options: [
+                { text: "Apple 🍎", correct: false },
+                { text: "Elephant 🐘", correct: true },
+                { text: "Ice Cream 🍦", correct: false },
+                { text: "Orange 🍊", correct: false },
+                { text: "Umbrella ☂️", correct: false }
+            ]
+        },
+        3: {
+            title: "Stage 3 - Fill Missing Vowels",
+            question: "What vowels complete: _c_ cr__m (Ice Cream)?",
+            hints: ["The first vowel sounds like 'eye'", "The second vowel sounds like 'ee'"],
+            explanation: "Ice Cream contains the vowels I (eye) and E (ee). Many words have multiple vowels!",
+            options: [
+                { text: "I and E", correct: true },
+                { text: "A and O", correct: false },
+                { text: "E and U", correct: false },
+                { text: "O and A", correct: false },
+                { text: "U and I", correct: false }
+            ]
+        },
+        4: {
+            title: "Stage 4 - Vowel Counting",
+            question: "How many vowels are in: O-R-A-N-G-E?",
+            hints: ["Count only A, E, I, O, U", "Look at each letter: O, R, A, N, G, E"],
+            explanation: "Orange contains 2 vowels: O (start) and E (end). R, N, G are consonants.",
+            options: [
+                { text: "1 vowel", correct: false },
+                { text: "2 vowels", correct: true },
+                { text: "3 vowels", correct: false },
+                { text: "4 vowels", correct: false },
+                { text: "5 vowels", correct: false }
+            ]
+        },
+        5: {
+            title: "Stage 5 - Master Challenge",
+            question: "Which word has ALL 5 vowels (A, E, I, O, U)?",
+            hints: ["This word means learning or schooling", "It has 9 letters"],
+            explanation: "EDUCATION contains all 5 vowels! E-D-U-C-A-T-I-O-N. Excellent work!",
+            options: [
+                { text: "Apple", correct: false },
+                { text: "Elephant", correct: false },
+                { text: "EDUCATION", correct: true },
+                { text: "Ice", correct: false },
+                { text: "Orange", correct: false }
+            ]
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", () => initLesson(1));
+</script>
+
+<script src="JS/Lessons.js"></script>
+<script src="JS/Accessibility.js"></script>
+
+</body>
+</html>
