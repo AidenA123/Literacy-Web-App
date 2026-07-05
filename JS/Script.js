@@ -217,7 +217,7 @@ function syncDashboardStats() {
 ============================== */
 function logout() {
   localStorage.removeItem("currentUser");
-  window.location.href = "Index.html";
+  window.location.href = "index.html";
 }
 
 function resetAllProgress() {
@@ -266,7 +266,7 @@ function resetAllProgress() {
 
 function ensureAuthenticated() {
   if (!localStorage.getItem("currentUser")) {
-    window.location.href = "Index.html";
+    window.location.href = "index.html";
   }
 }
 
